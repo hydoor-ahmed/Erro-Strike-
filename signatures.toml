@@ -1,0 +1,141 @@
+# ErroStrike Service Signatures Database
+# Format: name = Service Name, pattern = Regex with Capture Groups
+
+[[signatures]]
+name = "DNS (Verified)"
+port = 53
+pattern = '^\x12\x34' 
+service = "domain"
+
+# --- [ Web Infrastructure ] ---
+[[signatures]]
+name = "Nginx"
+pattern = '(?i)nginx/([0-9\.]+)'
+
+[[signatures]]
+name = "Apache HTTPD"
+pattern = '(?i)Apache/([0-9\.]+)\s*(?:\(([^)]+)\))?'
+
+[[signatures]]
+name = "Microsoft IIS"
+pattern = '(?i)Microsoft-IIS/([0-9\.]+)'
+
+[[signatures]]
+name = "LiteSpeed"
+pattern = '(?i)LiteSpeed'
+
+[[signatures]]
+name = "Caddy"
+pattern = '(?i)Server: Caddy'
+
+[[signatures]]
+name = "Tomcat/Coyote"
+pattern = '(?i)Coyote/([0-9\.]+)'
+
+[[signatures]]
+name = "Gunicorn"
+pattern = '(?i)gunicorn/([0-9\.]+)'
+
+[[signatures]]
+name = "Express.js"
+pattern = '(?i)X-Powered-By: Express'
+
+[[signatures]]
+name = "Next.js"
+pattern = '(?i)X-Powered-By: Next\.js'
+
+[[signatures]]
+name = "PHP"
+pattern = '(?i)PHP/([0-9\.]+)'
+
+# --- [ Databases & Storage ] ---
+[[signatures]]
+name = "MySQL"
+pattern = '(?i)([0-9\.]+)-MariaDB|([0-9\.]+)-community'
+
+[[signatures]]
+name = "PostgreSQL"
+pattern = '(?i)PostgreSQL'
+
+[[signatures]]
+name = "Redis"
+pattern = '(?i)redis_version:([0-9\.]+)'
+
+[[signatures]]
+name = "MongoDB"
+pattern = '(?i)"version"\s*:\s*"([0-9\.]+)"'
+
+[[signatures]]
+name = "Memcached"
+pattern = '(?i)STAT version ([0-9\.]+)'
+
+[[signatures]]
+name = "MSSQL"
+pattern = '(?i)Microsoft SQL Server ([0-9\.]+)'
+
+# --- [ Network & IoT ] ---
+[[signatures]]
+name = "OpenSSH"
+pattern = '(?i)OpenSSH_([0-9\.]+p[0-9]+)\s*([^ \r\n]*)'
+
+[[signatures]]
+name = "Dropbear SSH"
+pattern = '(?i)dropbear_([0-9\.]+)'
+
+[[signatures]]
+name = "ProFTPD"
+pattern = '(?i)ProFTPD ([0-9\.]+)'
+
+[[signatures]]
+name = "vsftpd"
+pattern = '(?i)vsftpd ([0-9\.]+)'
+
+[[signatures]]
+name = "Postfix SMTP"
+pattern = '(?i)220.*Postfix'
+
+[[signatures]]
+name = "Exim SMTP"
+pattern = '(?i)220.*Exim ([0-9\.]+)'
+
+[[signatures]]
+name = "Dovecot POP3/IMAP"
+pattern = '(?i)Dovecot'
+
+[[signatures]]
+name = "MQTT"
+pattern = '(?i)MQIsdp|MQTT'
+
+# --- [ DevOps & Cloud ] ---
+[[signatures]]
+name = "Docker API"
+pattern = '(?i)Api-Version: ([0-9\.]+)'
+
+[[signatures]]
+name = "Kubernetes"
+pattern = '(?i)k8s'
+
+[[signatures]]
+name = "Jenkins"
+pattern = '(?i)X-Jenkins: ([0-9\.]+)'
+
+[[signatures]]
+name = "RabbitMQ"
+pattern = '(?i)RabbitMQ ([0-9\.]+)'
+
+# --- [ Specialized/Dark/Stealth ] ---
+[[signatures]]
+name = "Metasploit Meterpreter"
+pattern = '(?i)\x16\x03\x01\x00' # SSL/TLS fingerprint common in stagers
+
+[[signatures]]
+name = "Cobalt Strike"
+pattern = '(?i)HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream'
+
+[[signatures]]
+name = "Tor Bridge/Relay"
+pattern = '(?i)Tor/([0-9\.]+)'
+
+[[signatures]]
+name = "Shadowsocks"
+pattern = '(?i)forbidden' # Common response on non-auth probes

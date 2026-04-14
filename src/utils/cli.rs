@@ -19,5 +19,8 @@ pub struct  CliArgs {
 
   #[arg(short, long, action = clap::ArgAction::SetTrue)]
   pub stealth: bool,
+
+  #[arg[short, long, default_value_t = 0]]
+  pub decoys: u8,
 }
 

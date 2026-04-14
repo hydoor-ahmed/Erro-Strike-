@@ -1,0 +1,70 @@
+# --- LINUX FAMILY ---
+[[signatures]]
+name = "Linux (Kernel 2.4/2.6)"
+ttl = 64
+window_sizes = [5840]
+mss = 1460
+wscale = 2
+
+[[signatures]]
+name = "Linux (Kernel 3.x - 5.x)"
+ttl = 64
+window_sizes = [2920, 5840, 14600, 64240]
+mss = 1460
+wscale = 7
+
+[[signatures]]
+name = "Google Front End (GFE)"
+ttl = 64
+window_sizes = [512, 1024, 1430]
+mss = 1430
+
+# --- WINDOWS FAMILY ---
+[[signatures]]
+name = "Windows 10/11 / Server 2019"
+ttl = 128
+window_sizes = [8192, 64240, 65535]
+mss = 1460
+wscale = 8
+
+[[signatures]]
+name = "Windows XP / 2000"
+ttl = 128
+window_sizes = [16384, 65535]
+mss = 1460
+
+# --- APPLE FAMILY ---
+[[signatures]]
+name = "macOS / iOS"
+ttl = 64
+window_sizes = [65535]
+mss = 1460
+wscale = 6
+
+# --- NETWORK DEVICES ---
+[[signatures]]
+name = "Cisco IOS"
+ttl = 255
+window_sizes = [4128, 16384]
+mss = 1460
+
+[[signatures]]
+name = "Juniper Junos"
+ttl = 64
+window_sizes = [16384]
+mss = 1460
+
+# --- IOT & EMBEDDED ---
+[[signatures]]
+name = "Embedded Linux (Router/IP Cam)"
+ttl = 64
+window_sizes = [1024, 2048, 4096]
+mss = 1460
+wscale = 0
+
+[[signatures]]
+name = "FreeBSD / NetBSD"
+ttl = 64
+window_sizes = [65535]
+mss = 1460
+wscale = 3

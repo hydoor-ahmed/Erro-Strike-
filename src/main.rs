@@ -7,6 +7,7 @@ use std::{
     time::Duration,
 };
 
+mod core;
 mod scanner;
 mod ui;
 mod utils;
@@ -18,9 +19,12 @@ use ui::{
     results::display_results,
 };
 
-use crate::scanner::{
-    ScanConfig, banner_grab::banner_grab, networking::get_target_ip, stealth::run_stealth_scan,
-    tcp::run_scan,
+use crate::{
+    scanner::{
+        ScanConfig, banner_grab::banner_grab, dns_lookup::get_target_ip, stealth::run_stealth_scan,
+        tcp::run_scan,
+    },
+    utils::is_udp_port::is_udp_port,
 };
 
 use crate::utils::{
@@ -53,7 +57,7 @@ fn main() {
             IpAddr::V4(v4) => v4,
             _ => panic!("Stealth Scan Requires IPv4!"),
         };
-        run_stealth_scan(ipv4, ports_vec, port_arc)
+        run_stealth_scan(ipv4, ports_vec, port_arc, &args.decoys)
     } else {
         let config = ScanConfig {
             target: target_ip,
@@ -67,10 +71,25 @@ fn main() {
     let _ = timer_handle.join();
 
     if results.iter().any(|r| r.is_open) {
-        println!("\n🧬 Grabbing service banners...");
+        println!("\n🧬 Grabbing Service Banners...");
+
         for result in results.iter_mut().filter(|r| r.is_open) {
             if let IpAddr::V4(ipv4) = target_ip {
-                result.banner = Some(banner_grab(ipv4, result.port));
+                let current_banner = if is_udp_port(result.port) {
+                    let b = scanner::udp::udp_banner_grap(ipv4, result.port);
+                    result.service = b.clone();
+                    result.banner = Some("UDP Active Probe".to_string());
+                    b
+                } else {
+                    let b = banner_grab(ipv4, result.port);
+                    result.banner = Some(b.clone());
+                    b
+                };
+
+                result.os_guess = result
+                    .stack_info
+                    .as_ref()
+                    .map(|stack| stack.guess_os(&current_banner));
             }
         }
     }

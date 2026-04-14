@@ -1,7 +1,6 @@
 pub fn get_service_info(service_name: &str) -> (&str, &str) {
     let name = service_name.to_lowercase();
 
-    // نستخدم الـ contains حتى نصيد كل المشتقات
     if name.contains("http") || name.contains("www") {
         ("Web Service", "🌐")
     } else if name.contains("ssh") {
@@ -21,7 +20,6 @@ pub fn get_service_info(service_name: &str) -> (&str, &str) {
     } else if name == "eldim" || name == "elite" {
         ("Elite/Joke Port", "💀")
     } else {
-        // إذا ما لكينا شي، نرجع الاسم الأصلي اللي بملف النظام كـ وصف
         ("System Service", "⚙️")
     }
 }

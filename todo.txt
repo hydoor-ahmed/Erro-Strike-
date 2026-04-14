@@ -1,0 +1,9 @@
+[X] OS Detection (TTL Based) ✅ (تم بنجاح وبشكل محترم)
+
+[X] Adaptive Jitter 🏗️ (جاري التنفيذ)
+
+[ ] Decoy IPs 🌑
+
+[ ] Service Fingerprinting (Deep Probes) 🧬
+
+[ ] Path Discovery (Web Module) 🕸️

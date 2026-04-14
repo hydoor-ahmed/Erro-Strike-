@@ -8,8 +8,8 @@ use std::{
 
 use indicatif::ProgressBar;
 
-use crate::scanner::banner_grab::banner_grab;
 use crate::scanner::{ScanConfig, ScanResult};
+use crate::{core::fingerprint::capture_stack_info, scanner::banner_grab::banner_grab};
 
 pub fn run_scan(
     config: ScanConfig,
@@ -37,6 +37,12 @@ pub fn run_scan(
                     Ok(stream) => {
                         let _ = stream.set_read_timeout(Some(config.timeout));
 
+                        let ipv4 = match config.target {
+                            IpAddr::V4(v4) => v4,
+                            IpAddr::V6(_) => panic!("IPv6 Is Not Supported."),
+                        };
+                        let stack_info = capture_stack_info(ipv4, port);
+
                         let version_info = banner_grab(
                             match config.target {
                                 IpAddr::V4(v4) => v4,
@@ -50,6 +56,8 @@ pub fn run_scan(
                             is_open: true,
                             banner: Some(version_info.clone()),
                             service: service.to_string(),
+                            os_guess: None,
+                            stack_info: stack_info,
                         };
                         let mut res = results.lock().unwrap();
                         res.push(result);
